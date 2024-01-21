@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 ARG PERSONAL_ACCESS_TOKEN
 ARG RUNNER_LABELS="self-hosted,Linux,X64,nvidia"
