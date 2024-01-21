@@ -14,6 +14,5 @@ else
         # jqコマンドを使用して、設定を追加（jqがインストールされていない場合はインストールが必要）
         sudo jq ". + {\"insecure-registries\": [\"$INSECURE_REGISTRY\"]}" "$DOCKER_CONFIG_FILE" > tmp.json && mv tmp.json "$DOCKER_CONFIG_FILE"
     fi
+    chmod 777 "$DOCKER_CONFIG_FILE"
 fi
-
-chmod 777 "$DOCKER_CONFIG_FILE"
