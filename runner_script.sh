@@ -1,4 +1,5 @@
-#!/bin/bash -e
+#!/bin/bash
+set -e
 
 echo "Configuring runner..."
 echo "URL: $URL"
