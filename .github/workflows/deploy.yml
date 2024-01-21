@@ -19,7 +19,7 @@ jobs:
           context: .
           file: ./CPU.Dockerfile
           push: true
-          tags: local/gh-runner-cpu ${{ env.DOCKER_TAG }}:latest , ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
+          tags: local/gh-runner-cpu , ${{ env.DOCKER_TAG }}:latest , ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
             - INSECURE_REGISTRY=${{ secrets.DOCKER_LOCAL_REGISTRY }}
@@ -31,7 +31,7 @@ jobs:
           context: .
           file: ./CPU.Dockerfile
           push: true
-          tags: local/gh-runner-cpu ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
+          tags: local/gh-runner-cpu , ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
             - INSECURE_REGISTRY=${{ secrets.DOCKER_LOCAL_REGISTRY }}
@@ -43,7 +43,7 @@ jobs:
           context: .
           file: ./GPU.Dockerfile
           push: true
-          tags: local/gh-runner-gpu ${{ env.DOCKER_TAG }}-gpu:latest , ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
+          tags: local/gh-runner-gpu , ${{ env.DOCKER_TAG }}-gpu:latest , ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
             - RUNNER_GROUP=Nvidia
@@ -56,7 +56,7 @@ jobs:
           context: .
           file: ./GPU.Dockerfile
           push: true
-          tags: local/gh-runner-gpu ${{ env.DOCKER_TAG }}-gpu:${{ env.VERSION }}
+          tags: local/gh-runner-gpu , ${{ env.DOCKER_TAG }}-gpu:${{ env.VERSION }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
             - RUNNER_GROUP=Nvidia
