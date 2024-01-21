@@ -43,7 +43,7 @@ RUN ./bin/installdependencies.sh
 COPY --chmod=777 ./scripts .
 
 # daaemon.jsonの追加
-RUN ./add_insecure.sh
+RUN ./add_insecure.sh ${INSECURE_REGISTRY}
 
 USER runner
 
