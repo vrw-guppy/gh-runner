@@ -16,7 +16,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         with:
           context: .
-          file: ./Dockerfile
+          file: ./CPU.Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_LOCAL_REGISTRY }}/gh-runner:latest
           build-args: |
@@ -27,7 +27,7 @@ jobs:
         if: startsWith(github.event.ref, 'refs/tags') || github.event_name == 'release'
         with:
           context: .
-          file: ./Dockerfile
+          file: ./CPU.Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_LOCAL_REGISTRY }}/gh-runner:${{ github.ref }}
           build-args: |
