@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 
 ARG PERSONAL_ACCESS_TOKEN
-ARG RUNNER_LABELS="self-hosted,Linux,X64,nvidia"
+ARG RUNNER_LABELS="self-hosted,Linux,X64"
 ARG RUNNER_NAME
 ARG RUNNER_GROUP=Default
 ARG URL=https://github.com/vrw-guppy

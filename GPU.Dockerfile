@@ -1,4 +1,4 @@
-FROM local/gh-runner-cpu:latest
+FROM local/gh-runner:gpu-base
 
 USER root
 
