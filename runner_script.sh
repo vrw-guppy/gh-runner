@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/bash -e
+
 echo "Configuring runner..."
 echo "URL: $URL"
 echo "RUNNER_GROUP: $RUNNER_GROUP"

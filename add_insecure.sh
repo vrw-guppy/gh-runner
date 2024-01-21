@@ -15,3 +15,5 @@ else
         sudo jq ". + {\"insecure-registries\": [\"$INSECURE_REGISTRY\"]}" "$DOCKER_CONFIG_FILE" > tmp.json && mv tmp.json "$DOCKER_CONFIG_FILE"
     fi
 fi
+
+chmod 777 "$DOCKER_CONFIG_FILE"

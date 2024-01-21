@@ -25,7 +25,6 @@ RUN curl -sSL https://get.docker.com/ | sh
 RUN sed -i -e '/ulimit -Hn 524288/d' /etc/init.d/docker
 
 # sudoersにrunnerを追加
-# add sudo user
 RUN groupadd -g 1000 developer && \
     useradd  -g      developer -G sudo -m -s /bin/bash runner && \
     echo 'runner:runner' | chpasswd
@@ -48,7 +47,6 @@ RUN ./add_insecure.sh
 
 # スクリプトの追加
 COPY runner_script.sh .
-
 RUN chmod +x ./runner_script.sh
 
 USER runner
