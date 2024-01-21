@@ -53,6 +53,7 @@ jobs:
           tags: ${{ env.DOCKER_TAG }}:latest , ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
+            - RUNNER_GROUP=Nvidia
 
       - name: Build Docker Image - GPU with Tag
         uses: docker/build-push-action@v2
@@ -64,3 +65,4 @@ jobs:
           tags: ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
+            - RUNNER_GROUP=Nvidia
