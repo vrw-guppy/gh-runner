@@ -16,7 +16,7 @@ ENV RUNNER_GROUP=${RUNNER_GROUP} \
 
 # Install Docker from Docker Inc. repositories.
 RUN apt-get update && apt-get upgrade -y && \  
-    apt-get install -y curl sudo
+    apt-get install -y curl sudo jq
 RUN curl -sSL https://get.docker.com/ | sh
 
 # /etc/init.d/dockerの編集
@@ -38,6 +38,20 @@ RUN curl -fsSL -o actions-runner.tar.gz -L $BINARY_URL && \
     rm actions-runner.tar.gz
 
 RUN ./bin/installdependencies.sh
+
+# INSECURE_REGISTRYの設定
+COPY add_insecure.sh .
+RUN chmod +x ./add_insecure.sh
+RUN ./add_insecure.sh
+
+# nvidia-container-toolkitのインストール
+RUN  distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+    && curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+    && curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list | \
+    sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+    tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+RUN apt-get update && apt-get install -y nvidia-container-toolkit
+RUN nvidia-ctk runtime configure --runtime=docker
 
 # スクリプトの追加
 COPY runner_script.sh .
