@@ -39,14 +39,8 @@ RUN curl -fsSL -o actions-runner.tar.gz -L $BINARY_URL && \
 
 RUN ./bin/installdependencies.sh
 
-# INSECURE_REGISTRYの設定
-COPY add_insecure.sh .
-RUN chmod +x ./add_insecure.sh
-RUN ./add_insecure.sh
-
 # スクリプトの追加
-COPY runner_script.sh .
-RUN chmod +x ./runner_script.sh
+COPY --chmod=777 ./scripts .
 
 USER runner
 
