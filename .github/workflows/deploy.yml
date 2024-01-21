@@ -2,9 +2,6 @@ name: Build Docker Image
 
 on:
   push:
-  release:
-    types:
-      - created
 jobs:
   build:
     runs-on: ansible
