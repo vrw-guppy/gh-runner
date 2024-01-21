@@ -1,7 +1,7 @@
-FROM ubuntu:24.04
+FROM ubuntu:20.04
 
 ARG PERSONAL_ACCESS_TOKEN
-ARG RUNNER_LABELS="self-hosted,Linux,X64"
+ARG RUNNER_LABELS="self-hosted,Linux,X64,nvidia"
 ARG RUNNER_NAME
 ARG RUNNER_GROUP=Default
 ARG URL=https://github.com/vrw-guppy
@@ -14,21 +14,24 @@ ENV RUNNER_GROUP=${RUNNER_GROUP} \
     PERSONAL_ACCESS_TOKEN=${PERSONAL_ACCESS_TOKEN} \
     URL=${URL}
 
-RUN apt-get update && \
-    apt-get install -y curl sudo
-
 # Install Docker from Docker Inc. repositories.
+RUN apt-get update && apt-get upgrade -y && \  
+    apt-get install -y curl sudo
 RUN curl -sSL https://get.docker.com/ | sh
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN useradd runner && \
-    echo "runner:runner" | chpasswd && \
-    chsh -s /usr/bin/bash runner && \
-    usermod -aG sudo runner && \
-    mkdir /actions-runner && \
-    chown runner:runner /actions-runner
+# /etc/init.d/dockerの編集
+RUN sed -i -e '/ulimit -Hn 524288/d' /etc/init.d/docker
+
+# sudoersにrunnerを追加
+# add sudo user
+RUN groupadd -g 1000 developer && \
+    useradd  -g      developer -G sudo -m -s /bin/bash runner && \
+    echo 'runner:runner' | chpasswd
+RUN echo 'runner ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN usermod -aG docker runner
 
 WORKDIR /actions-runner
+RUN chown runner /actions-runner
 
 RUN curl -fsSL -o actions-runner.tar.gz -L $BINARY_URL && \
     tar xf actions-runner.tar.gz && \

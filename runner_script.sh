@@ -1,4 +1,6 @@
 #!/bin/bash
+sudo service docker start
+
 echo "Configuring runner..."
 echo "URL: $URL"
 echo "RUNNER_GROUP: $RUNNER_GROUP"
