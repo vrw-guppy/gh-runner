@@ -19,7 +19,7 @@ jobs:
           context: .
           file: ./CPU.Dockerfile
           push: true
-          tags: ${{ env.DOCKER_TAG }}:latest , ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
+          tags: local/gh-runner-cpu ${{ env.DOCKER_TAG }}:latest , ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
             - INSECURE_REGISTRY=${{ secrets.DOCKER_LOCAL_REGISTRY }}
@@ -31,19 +31,10 @@ jobs:
           context: .
           file: ./CPU.Dockerfile
           push: true
-          tags: ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
+          tags: local/gh-runner-cpu ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
             - INSECURE_REGISTRY=${{ secrets.DOCKER_LOCAL_REGISTRY }}
-
-  build-gpu:
-    runs-on: ansible
-    env:
-      DOCKER_TAG: ${{ secrets.DOCKER_LOCAL_REGISTRY }}/gh-runner-gpu
-      VERSION: ${{ github.event.release.tag_name != '' && github.event.release.tag_name || github.ref_name }}
-
-    steps:
-      - uses: actions/checkout@v2
 
       - name: Build Docker Image - GPU
         uses: docker/build-push-action@v2
@@ -52,7 +43,7 @@ jobs:
           context: .
           file: ./GPU.Dockerfile
           push: true
-          tags: ${{ env.DOCKER_TAG }}:latest , ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
+          tags: local/gh-runner-gpu ${{ env.DOCKER_TAG }}-gpu:latest , ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
             - RUNNER_GROUP=Nvidia
@@ -65,7 +56,7 @@ jobs:
           context: .
           file: ./GPU.Dockerfile
           push: true
-          tags: ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
+          tags: local/gh-runner-gpu ${{ env.DOCKER_TAG }}-gpu:${{ env.VERSION }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
             - RUNNER_GROUP=Nvidia
