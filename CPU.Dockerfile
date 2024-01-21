@@ -5,6 +5,7 @@ ARG RUNNER_LABELS="self-hosted,Linux,X64,nvidia"
 ARG RUNNER_NAME
 ARG RUNNER_GROUP=Default
 ARG URL=https://github.com/vrw-guppy
+ARG INSECURE_REGISTRY
 
 ENV BINARY_URL=https://github.com/actions/runner/releases/download/v2.296.3/actions-runner-linux-x64-2.296.3.tar.gz
 
@@ -12,11 +13,12 @@ ENV RUNNER_GROUP=${RUNNER_GROUP} \
     RUNNER_LABELS=${RUNNER_LABELS} \
     RUNNER_WORKDIR=_work \
     PERSONAL_ACCESS_TOKEN=${PERSONAL_ACCESS_TOKEN} \
-    URL=${URL}
+    URL=${URL} \
+    INSECURE_REGISTRY=${INSECURE_REGISTRY}
 
 # Install Docker from Docker Inc. repositories.
 RUN apt-get update && apt-get upgrade -y && \  
-    apt-get install -y curl sudo
+    apt-get install -y curl sudo jq
 RUN curl -sSL https://get.docker.com/ | sh
 
 # /etc/init.d/dockerの編集
