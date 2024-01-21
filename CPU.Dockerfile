@@ -42,6 +42,9 @@ RUN ./bin/installdependencies.sh
 # スクリプトの追加
 COPY --chmod=777 ./scripts .
 
+# daaemon.jsonの追加
+RUN ./add_insecure.sh
+
 USER runner
 
 # コンテナが起動したときにスクリプトを実行
