@@ -14,11 +14,11 @@ ENV RUNNER_GROUP=${RUNNER_GROUP} \
     PERSONAL_ACCESS_TOKEN=${PERSONAL_ACCESS_TOKEN} \
     URL=${URL}
 
-# Install Docker from Docker Inc. repositories.
-RUN curl -sSL https://get.docker.com/ | sh
-
 RUN apt-get update && \
     apt-get install -y curl sudo
+
+# Install Docker from Docker Inc. repositories.
+RUN curl -sSL https://get.docker.com/ | sh
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN useradd runner && \
