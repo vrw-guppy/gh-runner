@@ -2,12 +2,15 @@ name: Build Docker Image
 
 on:
   push:
-
+  release:
+    types:
+      - created
 jobs:
   build:
     runs-on: ansible
     env:
       DOCKER_TAG: ${{ secrets.DOCKER_LOCAL_REGISTRY }}/gh-runner
+      VERSION: ${{ github.event.release.tag_name != '' && github.event.release.tag_name || github.ref_name }}
 
     steps:
       - uses: actions/checkout@v2
@@ -19,7 +22,7 @@ jobs:
           context: .
           file: ./CPU.Dockerfile
           push: true
-          tags: ${{ env.DOCKER_TAG }}:latest , ${{ env.DOCKER_TAG }}:${{ github.ref_name }}
+          tags: ${{ env.DOCKER_TAG }}:latest , ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
 
@@ -30,6 +33,6 @@ jobs:
           context: .
           file: ./CPU.Dockerfile
           push: true
-          tags: ${{ env.DOCKER_TAG }}:${{ github.ref }}
+          tags: ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
