@@ -19,7 +19,7 @@ jobs:
           context: .
           file: ./CPU.Dockerfile
           push: true
-          tags: ${{ env.DOCKER_TAG }}:latest ${{ env.DOCKER_TAG }}:${{ github.sha }}
+          tags: ${{ env.DOCKER_TAG }}:latest ${{ env.DOCKER_TAG }}:${{ github.ref_name }}
           build-args: |
             - PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
 
