@@ -23,6 +23,7 @@ jobs:
           build-args: |
             PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
             INSECURE_REGISTRY=${{ secrets.DOCKER_LOCAL_REGISTRY }}
+            RUNNER_LABELS="self-hosted,Linux,X64,cpu"
 
       - name: Build Docker Image - CPU with Tag
         uses: docker/build-push-action@v2
@@ -35,6 +36,7 @@ jobs:
           build-args: |
             PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
             INSECURE_REGISTRY=${{ secrets.DOCKER_LOCAL_REGISTRY }}
+            RUNNER_LABELS="self-hosted,Linux,X64,cpu"
 
       - name: Build Docker Image - GPU base image
         uses: docker/build-push-action@v2
@@ -47,6 +49,7 @@ jobs:
             PERSONAL_ACCESS_TOKEN=${{ secrets.GH_TOKEN }}
             RUNNER_GROUP=Nvidia
             INSECURE_REGISTRY=${{ secrets.DOCKER_LOCAL_REGISTRY }}
+            RUNNER_LABELS="self-hosted,Linux,X64,nvidia"
 
       - name: Build Docker Image - GPU
         uses: docker/build-push-action@v2
