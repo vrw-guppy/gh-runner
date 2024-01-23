@@ -1,0 +1,35 @@
+name: Build Docker Image
+
+on:
+  push:
+jobs:
+  build:
+    runs-on: cpu
+    env:
+      DOCKER_TAG: ${{ secrets.DOCKER_LOCAL_REGISTRY }}/base-python
+      VERSION: ${{ github.event.release.tag_name != '' && github.event.release.tag_name || github.ref_name }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Docker Image - Python Base
+        uses: docker/build-push-action@v2
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        with:
+          context: .
+          file: ./PythonBase.Dockerfile
+          push: true
+          tags: ${{ env.DOCKER_TAG }}:latest , ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
+          build-args: |
+            GH_TOKEN=${{ secrets.GH_TOKEN }}
+
+      - name: Build Docker Image - Python Base with Tag
+        uses: docker/build-push-action@v2
+        if: startsWith(github.event.ref, 'refs/tags') || github.event_name == 'release'
+        with:
+          context: .
+          file: ./PythonBase.Dockerfile
+          push: true
+          tags: ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
+          build-args: |
+            GH_TOKEN=${{ secrets.GH_TOKEN }}
