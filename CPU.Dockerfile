@@ -18,10 +18,7 @@ RUN echo 'runner ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN usermod -aG docker runner
 
 WORKDIR /actions-runner
-RUN mkdir /actions-runner/_work
-RUN chmod 777 /actions-runner
-RUN chmod 777 /actions-runner/_work
-RUN chown runner /actions-runner
+RUN chown runner /actions-runner -R
 
 RUN curl -fsSL -o actions-runner.tar.gz -L $BINARY_URL && \
     tar xf actions-runner.tar.gz && \
