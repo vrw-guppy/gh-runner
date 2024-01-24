@@ -34,6 +34,7 @@ ARG RUNNER_LABELS="self-hosted,Linux,X64"
 ARG RUNNER_GROUP=Default
 ARG URL=https://github.com/vrw-guppy
 ARG INSECURE_REGISTRY
+ARG GH_TOKEN
 
 ENV RUNNER_GROUP=${RUNNER_GROUP} \
     RUNNER_LABELS=${RUNNER_LABELS} \
@@ -49,6 +50,9 @@ COPY --chmod=777 ./scripts .
 RUN ./add_insecure.sh ${INSECURE_REGISTRY}
 
 USER runner
+
+# GITの設定
+RUN git config --global url."https://$GH_TOKEN:x-oauth-basic@github.com/".insteadOf "https://github.com/"
 
 # コンテナが起動したときにスクリプトを実行
 CMD ["./runner_script.sh"]
