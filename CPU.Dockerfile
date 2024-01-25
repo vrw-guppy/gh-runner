@@ -21,7 +21,6 @@ WORKDIR /actions-runner
 
 # ファイルの権限設定
 RUN chown runner  -R /actions-runner
-RUN chmod 777 -R /actions-runner
 
 RUN curl -fsSL -o actions-runner.tar.gz -L $BINARY_URL && \
     tar xf actions-runner.tar.gz && \
@@ -43,8 +42,9 @@ ENV RUNNER_GROUP=${RUNNER_GROUP} \
     URL=${URL} \
     INSECURE_REGISTRY=${INSECURE_REGISTRY}
 
-# スクリプトの追加
-COPY --chmod=777 ./scripts .
+# スクリプトの追加して権限設定
+COPY ./scripts .
+RUN chmod 777 -R /actions-runner
 
 # daaemon.jsonの追加
 RUN ./add_insecure.sh ${INSECURE_REGISTRY}
