@@ -19,6 +19,7 @@ RUN usermod -aG docker runner
 
 WORKDIR /actions-runner
 RUN chown runner /actions-runner -R
+RUN chmod 777 /actions-runner -R
 
 RUN curl -fsSL -o actions-runner.tar.gz -L $BINARY_URL && \
     tar xf actions-runner.tar.gz && \
