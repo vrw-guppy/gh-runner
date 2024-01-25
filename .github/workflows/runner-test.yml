@@ -11,16 +11,18 @@ on:
 jobs:
   test-python-lint-and-test:
     runs-on: ${{ github.event.inputs.runner-name }}
-    container:
-      image: registry.guppy.local/base-python:master
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v2
+
       - name: Install Python dependencies
         run: |
           cd ./test-python
+          pip install poetry
           git config --global url."https://${{ secrets.GH_TOKEN }}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
           poetry install
 
@@ -43,6 +45,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Pull base image
+        run: |
+          docker pull registry.guppy.local/base-python:master
 
       - name: Build Docker Image
         uses: docker/build-push-action@v2
