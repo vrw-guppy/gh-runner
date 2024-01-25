@@ -13,9 +13,6 @@ jobs:
     runs-on: ${{ github.event.inputs.runner-name }}
     container:
       image: registry.guppy.local/base-python:master
-    defaults:
-      run:
-        working-directory: ./test-python
 
     steps:
       - name: Checkout repository
@@ -23,15 +20,18 @@ jobs:
 
       - name: Install Python dependencies
         run: |
+          cd ./test-python
           git config --global url."https://${{ secrets.GH_TOKEN }}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
           poetry install
 
       - name: Run flake8 linter
         run: |
+          cd ./test-python
           poetry run flake8 .
 
       - name: Run unittest
         run: |
+          cd ./test-python
           poetry run pytest --cov=src -v
 
   test-build:
