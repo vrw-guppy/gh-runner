@@ -17,7 +17,8 @@ echo "Configuring runner..."
     --pat $PERSONAL_ACCESS_TOKEN \
     --runnergroup $RUNNER_GROUP \
     --labels $RUNNER_LABELS \
-    --work $RUNNER_WORKDIR
+    --work $RUNNER_WORKDIR \
+    --name $RUNNER_NAME
 
 echo "Starting runner..."
 ./run.sh
