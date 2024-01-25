@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  cpu-runner:
+    build:
+      context: .
+      dockerfile: CPU.Dockerfile
+      args:
+        - PERSONAL_ACCESS_TOKEN=${PERSONAL_ACCESS_TOKEN}
+        - RUNNER_LABELS=${RUNNER_LABELS}
+        - INSECURE_REGISTRY=${INSECURE_REGISTRY}
+    environment:
+      - RUNNER_NAME=${RUNNER_NAME}
+    privileged: true
