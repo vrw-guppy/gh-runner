@@ -4,7 +4,7 @@ ENV BINARY_URL=https://github.com/actions/runner/releases/download/v2.296.3/acti
 
 # Install Docker from Docker Inc. repositories.
 RUN apt-get update && apt-get upgrade -y && \  
-    apt-get install -y curl sudo jq
+    apt-get install -y curl sudo jq zip
 RUN curl -sSL https://get.docker.com/ | sh
 
 # /etc/init.d/dockerの編集
@@ -29,6 +29,15 @@ RUN curl -fsSL -o actions-runner.tar.gz -L $BINARY_URL && \
     rm actions-runner.tar.gz
 
 RUN ./bin/installdependencies.sh
+
+# https://github.com/actions/runner-container-hooks
+ARG RUNNER_CONTAINER_HOOKS_VERSION=0.3.2
+
+RUN curl -fLo runner-container-hooks.zip https://github.com/actions/runner-container-hooks/releases/download/v${RUNNER_CONTAINER_HOOKS_VERSION}/actions-runner-hooks-docker-${RUNNER_CONTAINER_HOOKS_VERSION}.zip \
+    && unzip ./runner-container-hooks.zip -d ./runner-container-hooks-docker \
+    && rm -f runner-container-hooks.zip
+ENV ACTIONS_RUNNER_CONTAINER_HOOKS="${RUNNER_DIR}/runner-container-hooks-docker/index.js"
+
 
 ARG PERSONAL_ACCESS_TOKEN
 ARG RUNNER_LABELS="self-hosted,Linux,X64"

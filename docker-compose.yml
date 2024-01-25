@@ -11,3 +11,4 @@ services:
     environment:
       - RUNNER_NAME=${RUNNER_NAME}
     privileged: true
+    network_mode: host

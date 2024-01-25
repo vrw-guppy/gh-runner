@@ -39,9 +39,6 @@ jobs:
     env:
       DOCKER_TAG: ${{ secrets.DOCKER_LOCAL_REGISTRY }}/python-test
       VERSION: ${{ github.event.release.tag_name != '' && github.event.release.tag_name || github.ref_name }}
-    defaults:
-      run:
-        working-directory: ./test-python
 
     steps:
       - name: Checkout repository
@@ -50,8 +47,8 @@ jobs:
       - name: Build Docker Image
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./test-python
+          file: ./test-python/Dockerfile
           push: false
           tags: ${{ env.DOCKER_TAG }}:${{ env.VERSION }} , ${{ env.DOCKER_TAG }}:latest
           build-args: |
