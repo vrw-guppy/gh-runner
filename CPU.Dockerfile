@@ -19,15 +19,15 @@ RUN usermod -aG docker runner
 
 WORKDIR /actions-runner
 
+# ファイルの権限設定
+RUN chown runner  -R /actions-runner
+RUN chmod 777 -R /actions-runner
+
 RUN curl -fsSL -o actions-runner.tar.gz -L $BINARY_URL && \
     tar xf actions-runner.tar.gz && \
     rm actions-runner.tar.gz
 
 RUN ./bin/installdependencies.sh
-
-# ファイルの権限設定
-RUN chown runner  -R /actions-runner
-RUN chmod 777 -R /actions-runner
 
 ARG PERSONAL_ACCESS_TOKEN
 ARG RUNNER_LABELS="self-hosted,Linux,X64"
