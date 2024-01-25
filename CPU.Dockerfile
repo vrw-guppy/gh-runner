@@ -18,14 +18,16 @@ RUN echo 'runner ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN usermod -aG docker runner
 
 WORKDIR /actions-runner
-RUN chown runner /actions-runner -R
-RUN chmod 777 /actions-runner -R
 
 RUN curl -fsSL -o actions-runner.tar.gz -L $BINARY_URL && \
     tar xf actions-runner.tar.gz && \
     rm actions-runner.tar.gz
 
 RUN ./bin/installdependencies.sh
+
+# ファイルの権限設定
+RUN chown runner /actions-runner -R
+RUN chmod 777 /actions-runner -R
 
 ARG PERSONAL_ACCESS_TOKEN
 ARG RUNNER_LABELS="self-hosted,Linux,X64"
