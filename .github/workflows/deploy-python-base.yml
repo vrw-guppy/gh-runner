@@ -33,3 +33,5 @@ jobs:
           tags: ${{ env.DOCKER_TAG }}:${{ env.VERSION }}
           build-args: |
             GH_TOKEN=${{ secrets.GH_TOKEN }}
+            PYPI_LOCAL_USERNAME=${{ secrets.PYPI_LOCAL_USERNAME }}
+            PYPI_LOCAL_PASSWORD=${{ secrets.PYPI_LOCAL_PASSWORD }}
